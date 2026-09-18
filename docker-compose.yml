@@ -1,0 +1,72 @@
+services:
+  node-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: distcache-node-1
+    hostname: node-1
+    ports:
+      - "8001:8001"
+      - "9001:9001"
+    volumes:
+      - node1-data:/app/data
+    command: >
+      --node-id node-1
+      --host 0.0.0.0
+      --port 8001
+      --raft-port 9001
+      --data-dir /app/data
+      --peers node-2@node-2:8002:9002,node-3@node-3:8003:9003
+    networks:
+      - distcache-net
+
+  node-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: distcache-node-2
+    hostname: node-2
+    ports:
+      - "8002:8002"
+      - "9002:9002"
+    volumes:
+      - node2-data:/app/data
+    command: >
+      --node-id node-2
+      --host 0.0.0.0
+      --port 8002
+      --raft-port 9002
+      --data-dir /app/data
+      --peers node-1@node-1:8001:9001,node-3@node-3:8003:9003
+    networks:
+      - distcache-net
+
+  node-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: distcache-node-3
+    hostname: node-3
+    ports:
+      - "8003:8003"
+      - "9003:9003"
+    volumes:
+      - node3-data:/app/data
+    command: >
+      --node-id node-3
+      --host 0.0.0.0
+      --port 8003
+      --raft-port 9003
+      --data-dir /app/data
+      --peers node-1@node-1:8001:9001,node-2@node-2:8002:9002
+    networks:
+      - distcache-net
+
+volumes:
+  node1-data:
+  node2-data:
+  node3-data:
+
+networks:
+  distcache-net:
+    driver: bridge

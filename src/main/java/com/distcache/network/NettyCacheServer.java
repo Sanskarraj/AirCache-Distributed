@@ -51,8 +51,7 @@ public class NettyCacheServer implements Closeable {
                         @Override
                         protected void initChannel(SocketChannel ch) {
                             ChannelPipeline p = ch.pipeline();
-                            p.addLast(new NettyFrameCodec());
-                            p.addLast(new ServerHandler(clusterManager));
+                            p.addLast(new ProtocolDetector(clusterManager, host, port));
                         }
                     });
 

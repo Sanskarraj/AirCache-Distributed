@@ -12,7 +12,8 @@ public enum OpCode {
     FORWARD_PUT((byte) 0x06),
     FORWARD_DELETE((byte) 0x07),
     RAFT_MESSAGE((byte) 0x08),
-    CLUSTER_INFO((byte) 0x09);
+    CLUSTER_INFO((byte) 0x09),
+    DOCS((byte) 0x0A);
 
     private final byte code;
 

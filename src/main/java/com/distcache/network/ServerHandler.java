@@ -63,6 +63,19 @@ public class ServerHandler extends SimpleChannelInboundHandler<BinaryProtocolFra
                 ctx.writeAndFlush(response);
             }
 
+            case DOCS -> {
+                Node local = clusterManager.getLocalNode();
+                String docText = DocsContentProvider.getMarkdownDocs(local.getHost(), local.getCachePort(), local.getNodeId());
+                BinaryProtocolFrame response = BinaryProtocolFrame.createResponse(
+                        OpCode.DOCS,
+                        correlationId,
+                        StatusCode.SUCCESS,
+                        null,
+                        docText.getBytes(StandardCharsets.UTF_8)
+                );
+                ctx.writeAndFlush(response);
+            }
+
             case RAFT_MESSAGE -> {
                 BinaryProtocolFrame response = clusterManager.handleRaftMessage(frame);
                 ctx.writeAndFlush(response);

@@ -1,4 +1,5 @@
-# AirCache - A Distributed Cache with Shared-Nothing Architecture
+# AirCache Distributed Cache with Shared-Nothing Architecture
+![AirCache - Distributed](image.png)
 
 A high-performance, distributed key-value cache built in **Java 21**, **Netty (NIO)**, **TCP**, **Raft consensus**, and **Docker**. Engineered with a shared-nothing architecture, fine-grained striped concurrency, Segmented LRU (SLRU) eviction, asynchronous write-behind persistence, and consistent hashing with virtual nodes.
 
